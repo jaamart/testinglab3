@@ -4,7 +4,7 @@ import { ref } from "vue";
 defineProps<{ msg: string }>();
 
 const count = ref(0);
-const test = ref({});
+const test = ref([]);
 
 fetch("/api")
   .then((res) => res.json())
@@ -19,7 +19,9 @@ fetch("/api")
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
   </div>
-  {{ test[0].name }}
+  <div v-if="test.length > 0">
+    {{ test[0].name }}
+  </div>
 </template>
 
 <style scoped>
