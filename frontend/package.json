@@ -12,7 +12,10 @@
     "vue": "^3.3.8"
   },
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^19.2.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@vitejs/plugin-vue": "^4.5.0",
+    "cypress": "^13.6.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
     "vue-tsc": "^1.8.22"
