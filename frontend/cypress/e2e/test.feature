@@ -8,3 +8,8 @@ Scenario: Skriv något
   Given Jag är på hemsidan och formuläret är tomt
   When Jag skriver in något i namn-fältet
   Then Värdet ska stå i namn-fältet
+
+Scenario: Lägg till en ny kund
+  Given Jag är på hemsidan och formuläret är tomt
+  When Jag fyller i formuläret och klickar på submit
+  Then Värdena läggs till i databasen och backendet skickar bekräftelse på vad som lagts till
