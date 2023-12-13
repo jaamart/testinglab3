@@ -20,7 +20,7 @@ fetch("/api")
     <button type="button" @click="count++">count is {{ count }}</button>
   </div>
   <div v-if="test.length > 0">
-    {{ test[0].name }}
+    {{ test }}
   </div>
 </template>
 
