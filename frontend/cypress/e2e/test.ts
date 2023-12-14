@@ -13,7 +13,7 @@ Then('Värdet ska stå i namn-fältet', () => {
   cy.get('[data-cy="client-name"').should('have.value', 'ITHS')
 })
 
-Given('Jag är på hemsidan och redo att fyllai formuläret', () => {
+Given('Jag är på hemsidan och redo att fylla i formuläret', () => {
   cy.visit('http://localhost:5173/')
 
 })

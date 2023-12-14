@@ -51,21 +51,17 @@ app.get('/api', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { rows } = yield client.query('SELECT * FROM users');
     res.send(rows);
 }));
-app.post('/api/clients'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('here I am');
-    res.send('here I am');
-    // try {
-    //   const {name, shortname, id, bank, endofyear} = req.body
-    //   const newClient = await client.query(
-    //     'INSERT INTO clients (cliendId, name, shortname, bank, endofyear) VALUES ($1, $2, $3, $4, $5',
-    //     [id, name, shortname, bank, endofyear]
-    //     )
-    //   res.status(200).json({message: 'Användare reggad' })
-    // } catch (error) {
-    //   //console.log(error.message)
-    //   res.status(500).json({message: 'fel'})
-    // }
-});
+app.post('/api/clients', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        //const {name, shortname, id, bank, endofyear} = req.body
+        const newClient = yield client.query('INSERT INTO clients (clientid, name, shortname, bank, endofyear) VALUES ($1, $2, $3, $4, $5)', [12, 'test', 'test', 'seb', 12]);
+        res.status(200).json({ message: 'Användare reggad' });
+    }
+    catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: 'fel' });
+    }
+}));
 app.get('/api/clients', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { rows } = yield client.query('SELECT * FROM clients');
     res.send(rows);

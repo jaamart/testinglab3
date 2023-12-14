@@ -10,6 +10,7 @@ Scenario: Skriv något
   Then Värdet ska stå i namn-fältet
 
 Scenario: Lägg till en ny kund
-  Given Jag är på hemsidan och formuläret är tomt
+  Given Jag är på hemsidan och redo att fylla i formuläret
   When Jag fyller i formuläret och klickar på submit
-  Then Värdena läggs till i databasen och backendet skickar bekräftelse på vad som lagts till
+  Then Värdena läggs till i databasen och backendet skickar samma information
+  som lagts in i formuläret och visar det i en modal
