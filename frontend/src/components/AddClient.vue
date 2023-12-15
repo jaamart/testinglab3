@@ -49,6 +49,7 @@
     </label>
     <button type="submit">Lägg till i databasen</button>
     {{ clients }}
+    {{ addedClient }}
   </form>
 </template>
 
@@ -58,9 +59,10 @@ import axios from "axios";
 
 const clientname = ref("");
 const clientshortname = ref("");
-const clientid = ref("");
+const clientid = ref(0);
 const clientbank = ref("");
-const clienteoy = ref("");
+const clienteoy = ref(0);
+const addedClient = ref();
 
 const clients = ref({});
 
@@ -70,14 +72,15 @@ function addClient() {
   console.log("skickar data");
   axios
     .post("/api/clients", {
-      id: 122,
-      name: "test",
-      shortname: "test",
-      bank: "seb",
-      endofyear: 12,
+      id: clientid.value,
+      name: clientname.value,
+      shortname: clientshortname.value,
+      bank: clientbank.value,
+      endofyear: clienteoy.value,
     })
     .then((res) => {
       console.log(res);
+      addedClient.value = res.data;
     })
     .catch((err) => {
       console.log(err);

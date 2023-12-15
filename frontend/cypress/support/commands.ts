@@ -35,3 +35,7 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add('resetDB', () => {
+  cy.exec('psql -f init.sql "postgres://postgres:@localhost/postgres"')
+})

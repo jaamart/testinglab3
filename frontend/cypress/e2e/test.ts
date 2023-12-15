@@ -6,7 +6,6 @@ Given('Jag är på hemsidan och formuläret är tomt', () => {
 
 When('Jag skriver in något i namn-fältet', () => {
   cy.get('[data-cy="client-name"').type('ITHS')
-
 })
 
 Then('Värdet ska stå i namn-fältet', () => {
@@ -15,13 +14,11 @@ Then('Värdet ska stå i namn-fältet', () => {
 
 Given('Jag är på hemsidan och redo att fylla i formuläret', () => {
   cy.visit('http://localhost:5173/')
-
+  //cy.resetDB()
 })
 
 When('Jag fyller i formuläret och klickar på submit', () => {
-
 })
 
 Then('Värdena läggs till i databasen och backendet skickar bekräftelse på vad som lagts till', () => {
-
 })
