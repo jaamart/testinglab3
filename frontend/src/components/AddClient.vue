@@ -1,56 +1,73 @@
 <template>
-  <h2>Add-a-client-form</h2>
-  <form class="form" @submit.prevent="addClient">
-    <label>
-      Hela namnet
-      <input
-        data-cy="client-name"
-        type="text"
-        placeholder="Älvstaden Redovisning AB"
-        v-model="clientname"
-      />
-    </label>
-    <label>
-      Kortare namn
-      <input
-        data-cy="client-shortname"
-        type="text"
-        v-model="clientshortname"
-        placeholder="ÄRAB"
-      />
-    </label>
-    <label>
-      Internt id-nummer
-      <input
-        data-cy="client-id"
-        type="text"
-        v-model="clientid"
-        placeholder="135"
-      />
-    </label>
+  <div class="card">
+    <h2>Lägg till kund</h2>
+    <form class="form" @submit.prevent="addClient">
+      <label>
+        Hela namnet
+        <input
+          data-cy="client-name"
+          type="text"
+          placeholder="Älvstaden Redovisning AB"
+          v-model="clientname"
+        />
+      </label>
+      <label>
+        Kortare namn
+        <input
+          data-cy="client-shortname"
+          type="text"
+          v-model="clientshortname"
+          placeholder="ÄRAB"
+        />
+      </label>
+      <label>
+        Internt id-nummer
+        <input
+          data-cy="client-id"
+          type="text"
+          v-model="clientid"
+          placeholder="135"
+        />
+      </label>
 
-    <label>
-      Kundens bank
-      <input
-        data-cy="client-bank"
-        type="text"
-        v-model="clientbank"
-        placeholder="Nordea"
-      />
-    </label>
-    <label>
-      Bokslutsdatum
-      <input
-        data-cy="client-endofyear"
-        type="text"
-        v-model="clienteoy"
-        placeholder="12"
-      />
-    </label>
-    <button type="submit">Lägg till i databasen</button>
-    {{ clients }}
-    {{ addedClient }}
-  </form>
+      <label>
+        Kundens bank
+        <input
+          data-cy="client-bank"
+          type="text"
+          v-model="clientbank"
+          placeholder="Nordea"
+        />
+      </label>
+      <label>
+        Bokslutsdatum
+        <input
+          data-cy="client-endofyear"
+          type="text"
+          v-model="clienteoy"
+          placeholder="12"
+        />
+      </label>
+      <button data-cy="add-client" type="submit">Lägg till i databasen</button>
+    </form>
+
+    <div v-if="addedClient">
+      <h2>Inlagd kund</h2>
+      <div data-cy="incoming-client-name">
+        {{ addedClient.newClient.clientname }}
+      </div>
+      <div data-cy="incoming-client-shortname">
+        {{ addedClient.newClient.shortname }}
+      </div>
+      <div data-cy="incoming-client-id">
+        {{ addedClient.newClient.clientid }}
+      </div>
+      <div data-cy="incoming-client-bank">{{ addedClient.newClient.bank }}</div>
+      <div data-cy="incoming-client-endofyear">
+        {{ addedClient.newClient.endofyear }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -63,8 +80,7 @@ const clientid = ref(0);
 const clientbank = ref("");
 const clienteoy = ref(0);
 const addedClient = ref();
-
-const clients = ref({});
+const clients = ref([]);
 
 axios.get("/api/clients").then((res) => (clients.value = res.data));
 
@@ -92,5 +108,9 @@ function addClient() {
 .form {
   display: flex;
   flex-direction: column;
+}
+
+.card {
+  background-color: #ddd;
 }
 </style>

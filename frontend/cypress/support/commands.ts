@@ -6,7 +6,7 @@
 //
 // For more comprehensive examples of custom
 // commands please read more here:
-// https://on.cypress.io/custom-commands
+// https://on.cyp+ress.io/custom-commands
 // ***********************************************
 //
 //
@@ -36,6 +36,15 @@
 //   }
 // }
 
-Cypress.Commands.add('resetDB', () => {
-  cy.exec('psql -f init.sql "postgres://postgres:@localhost/postgres"')
+
+Cypress.Commands.add("resetDatabase", () => {
+  cy.exec('psql -f init.sql "postgres://postgres:studio@localhost/postgres"')
 })
+
+// Cypress.Commands.add("resetDB", () => {
+//   cy.exec('C/Program Files/PostgreSQL/16/bin/psql --help')
+// })
+
+// Cypress.Commands.add("resetDB", () => {
+//   cy.exec('echo "hej"')
+// })
