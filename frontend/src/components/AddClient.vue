@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <h2>Lägg till kund eller klicka på en i listan till vänster</h2>
+    <h2>Lägg till kund eller klicka på en i listan</h2>
     <form class="form" @submit.prevent="addClient">
       <label>
         Hela namnet
