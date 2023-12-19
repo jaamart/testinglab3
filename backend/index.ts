@@ -26,13 +26,13 @@ app.get('/api', async (req, res) => {
 
 app.post('/api/clients', async (req, res) => {
   try {
-    const {name, shortname, id, bank, endofyear} = req.body
-    console.log(name, shortname, id, bank, endofyear);
+    const {name, shortname, id, corpform, bank, endofyear} = req.body
+    console.log(name, shortname, id, bank, endofyear, corpform);
 
 
     const newClient = await client.query(
-      'INSERT INTO clients (clientid, clientname, shortname, bank, endofyear) VALUES ($1, $2, $3, $4, $5)',
-      [id, name, shortname, bank, endofyear]
+      'INSERT INTO clients (clientid, clientname, shortname, bank, endofyear, corporateform) VALUES ($1, $2, $3, $4, $5, $6)',
+      [id, name, shortname, bank, endofyear, corpform]
       )
     const newClientData = await client.query(
       'SELECT * FROM clients WHERE clientid = $1', [id]

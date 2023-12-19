@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <h2>Lägg till kund</h2>
+    <h2>Lägg till kund eller klicka på en i listan till vänster</h2>
     <form class="form" @submit.prevent="addClient">
       <label>
         Hela namnet
@@ -30,6 +30,15 @@
         />
       </label>
 
+      <label>
+        Bolagsform
+        <input
+          data-cy="client-form"
+          type="text"
+          v-model="clientCorpForm"
+          placeholder="AB"
+        />
+      </label>
       <label>
         Kundens bank
         <input
@@ -62,6 +71,9 @@
       <div data-cy="incoming-client-id">
         {{ addedClient.newClient.clientid }}
       </div>
+      <div data-cy="incoming-client-corpform">
+        {{ addedClient.newClient.corporateform }}
+      </div>
       <div data-cy="incoming-client-bank">{{ addedClient.newClient.bank }}</div>
       <div data-cy="incoming-client-endofyear">
         {{ addedClient.newClient.endofyear }}
@@ -77,6 +89,7 @@ import axios from "axios";
 const clientname = ref("");
 const clientshortname = ref("");
 const clientid = ref(0);
+const clientCorpForm = ref("");
 const clientbank = ref("");
 const clienteoy = ref(0);
 const addedClient = ref();
@@ -91,6 +104,7 @@ function addClient() {
       id: clientid.value,
       name: clientname.value,
       shortname: clientshortname.value,
+      corpform: clientCorpForm.value,
       bank: clientbank.value,
       endofyear: clienteoy.value,
     })
@@ -108,9 +122,26 @@ function addClient() {
 .form {
   display: flex;
   flex-direction: column;
+  padding: 40px;
 }
 
 .card {
   background-color: #ddd;
+  border-radius: 15px;
+}
+
+button {
+  background-color: olivedrab;
+  border: 0;
+  margin: 20px;
+}
+
+button:hover {
+  background-color: olive;
+  box-shadow: 5px 5px 15px black;
+}
+
+label {
+  text-align: left;
 }
 </style>

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
-import AddClient from "./components/AddClient.vue";
 import ClientList from "./components/ClientList.vue";
 </script>
 
@@ -10,8 +8,7 @@ import ClientList from "./components/ClientList.vue";
       <ClientList />
     </div>
     <div class="maincontent">
-      <HelloWorld msg="Labb 3" />
-      <AddClient />
+      <RouterView />
     </div>
   </div>
 </template>
@@ -30,7 +27,6 @@ import ClientList from "./components/ClientList.vue";
   height: 100vh;
   background-color: goldenrod;
 }
-
 .maincontent {
   display: flex;
   flex-direction: column;

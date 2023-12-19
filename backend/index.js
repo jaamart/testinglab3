@@ -53,9 +53,9 @@ app.get('/api', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.post('/api/clients', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, shortname, id, bank, endofyear } = req.body;
-        console.log(name, shortname, id, bank, endofyear);
-        const newClient = yield client.query('INSERT INTO clients (clientid, clientname, shortname, bank, endofyear) VALUES ($1, $2, $3, $4, $5)', [id, name, shortname, bank, endofyear]);
+        const { name, shortname, id, corpform, bank, endofyear } = req.body;
+        console.log(name, shortname, id, bank, endofyear, corpform);
+        const newClient = yield client.query('INSERT INTO clients (clientid, clientname, shortname, bank, endofyear, corporateform) VALUES ($1, $2, $3, $4, $5, $6)', [id, name, shortname, bank, endofyear, corpform]);
         const newClientData = yield client.query('SELECT * FROM clients WHERE clientid = $1', [id]);
         res.status(200).json({ newClient: newClientData.rows[0] });
     }
