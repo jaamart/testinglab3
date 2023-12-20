@@ -13,7 +13,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Setup backend
-        run: cd backend/node index.js
+        run: backend/node index.js
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
