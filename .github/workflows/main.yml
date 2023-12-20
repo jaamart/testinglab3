@@ -12,8 +12,7 @@ jobs:
           clean: false
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
-      - name: Setup backend
-        run: backend/node index.js
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
