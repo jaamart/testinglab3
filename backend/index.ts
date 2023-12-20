@@ -55,6 +55,10 @@ app.get('/api/clients', async (req, res) => {
   res.send(rows)
 })
 
+app.get('/api/client/:clientid', async (req, res) => {
+  const { rows } = await client.query('SELECT * FROM clients WHERE clientid = $1',[req.params.clientid])
+  res.send(rows)
+})
 
 app.listen(port, () => {
   console.log(`Redo på ${port}`)

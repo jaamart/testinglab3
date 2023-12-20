@@ -13,3 +13,8 @@ Scenario: Lägg till en ny kund
   Given Jag är på hemsidan och redo att fylla i formuläret
   When Jag fyller i formuläret och klickar på submit
   Then Värdena läggs till i databasen och backendet skickar samma information som lagts in i formuläret och visar det på sidan
+
+Scenario: Välj en kund från listan
+  Given Sidan har laddat in en lista med kunder och visar den till vänster
+  When Jag klickar på en av dem
+  Then Sidan visar information om rätt kund

@@ -17,6 +17,7 @@ import ClientList from "./components/ClientList.vue";
 .wrapper {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .clientlist {
@@ -31,7 +32,7 @@ import ClientList from "./components/ClientList.vue";
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+
   margin-left: 250px;
 }
 </style>

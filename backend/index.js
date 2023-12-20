@@ -70,6 +70,10 @@ app.get('/api/clients', (req, res) => __awaiter(void 0, void 0, void 0, function
     const { rows } = yield client.query('SELECT * FROM clients');
     res.send(rows);
 }));
+app.get('/api/client/:clientid', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { rows } = yield client.query('SELECT * FROM clients WHERE clientid = $1', [req.params.clientid]);
+    res.send(rows);
+}));
 app.listen(port, () => {
     console.log(`Redo på ${port}`);
 });

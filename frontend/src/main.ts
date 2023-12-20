@@ -8,7 +8,7 @@ import ClientDetailsVue from './components/ClientDetails.vue';
 
 const routes = [
   { path: '/', name:'addClient', component: AddClient },
-  { path: '/clients/:id', name:'client', component: ClientDetailsVue }
+  { path: '/client/:id', name:'client', component: ClientDetailsVue }
 ]
 
 const router = createRouter({

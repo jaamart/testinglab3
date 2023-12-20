@@ -1,13 +1,13 @@
 <template>
-  <h1>Kunder</h1>
+  <h2>Kunder</h2>
   <ul>
-    <li v-for="client in clients" :key="client.id">
-      <router-link to="/clients/">
+    <li v-for="client in clients" :key="client.clientid">
+      <router-link :to="`/client/${client.clientid}`">
         {{ client.shortname }}
       </router-link>
     </li>
   </ul>
-  <router-link to="/">Lägg till en ny kund</router-link>
+  <router-link class="btn-style" to="/">Lägg till en ny kund</router-link>
 </template>
 
 <script setup lang="ts">
@@ -16,7 +16,7 @@ import axios from "axios";
 const clients: Ref<Client[]> = ref([]);
 
 interface Client {
-  id: number;
+  clientid: number;
   shortname: string;
   name: string;
 }
@@ -25,7 +25,13 @@ axios.get("/api/clients").then((res) => (clients.value = res.data));
 </script>
 
 <style scoped>
-h1 {
+.btn-style {
+  background-color: #333;
+  color: #ddd;
+  padding: 15px;
+  border-radius: 30px;
+}
+h2 {
   font-size: 32px;
   font-weight: 200;
 }
@@ -37,5 +43,11 @@ li {
   list-style-type: none;
   text-align: left;
   padding-left: 40px;
+  font-size: 22px;
+}
+
+a {
+  color: #333;
+  font-weight: 400;
 }
 </style>

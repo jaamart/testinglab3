@@ -33,3 +33,18 @@ Then('Värdena läggs till i databasen och backendet skickar samma information s
   cy.get('[data-cy="incoming-client-bank"').contains('Falkenbergs Sparbank')
   cy.get('[data-cy="incoming-client-endofyear"').contains('8')
 })
+
+Given('Sidan har laddat in en lista med kunder och visar den till vänster', () => {
+  cy.visit('http://localhost:5173/')
+  cy.get('ul > li')
+})
+
+When('Jag klickar på en av dem', () => {
+  cy.get('ul > li:first > a').click()
+})
+
+Then('Sidan visar information om rätt kund', ()=> {
+  let one, two
+  cy.get('ul > li:first > a').contains('Krebet')
+  cy.get('[data-cy="shortname"').contains('Krebet')
+})

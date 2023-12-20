@@ -10,7 +10,7 @@ CREATE TABLE clients (
 );
 
 INSERT INTO clients (clientid, clientname, shortname, corporateform, bank, endofyear)
-  VALUES (1, 'Krebet Redovisnings AB', 'Krebet', 'AB', 'Sparbanken', 2);
+  VALUES (1, 'Krebet Redovisning AB', 'Krebet', 'AB', 'Sparbanken', 2);
 
 INSERT INTO clients (clientid, clientname, shortname, corporateform, bank, endofyear)
   VALUES (2, 'Martikainen Måleri', 'M Måleri', 'EF', 'SEB', 12);
