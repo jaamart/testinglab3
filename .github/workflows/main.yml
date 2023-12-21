@@ -3,6 +3,23 @@ name: Cypress Tests
 on: push
 
 jobs:
+  backend:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install backend dependencies
+        run: cd backend &&
+          npm i &&
+          npm run build &&
+          node index.js &
+
   cypress-run:
     runs-on: ubuntu-22.04
     steps:
@@ -11,11 +28,6 @@ jobs:
         # Install NPM dependencies, cache them correctly
         # and run all Cypress tests
 
-      - name: Start backend
-        run: cd server &&
-          npm i &&
-          npm run build &&
-          node index.js &
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
