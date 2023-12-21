@@ -57,6 +57,15 @@
           placeholder="12"
         />
       </label>
+      <label>
+        Bokföringsintervall
+        <input
+          data-cy="client-booksfreq"
+          type="text"
+          v-model="clientbooksfreq"
+          placeholder="1 för månad, 3 för kvartal"
+        />
+      </label>
       <button data-cy="add-client" type="submit">Lägg till i databasen</button>
     </form>
 
@@ -78,6 +87,9 @@
       <div data-cy="incoming-client-endofyear">
         {{ addedClient.newClient.endofyear }}
       </div>
+      <div data-cy="incoming-client-booksfreq">
+        {{ addedClient.newClient.booksfrequency }}
+      </div>
     </div>
   </div>
 </template>
@@ -92,6 +104,7 @@ const clientid = ref(0);
 const clientCorpForm = ref("");
 const clientbank = ref("");
 const clienteoy = ref(0);
+const clientbooksfreq = ref("");
 const addedClient = ref();
 const clients = ref([]);
 
@@ -107,6 +120,7 @@ function addClient() {
       corpform: clientCorpForm.value,
       bank: clientbank.value,
       endofyear: clienteoy.value,
+      booksfrequency: clientbooksfreq.value,
     })
     .then((res) => {
       console.log(res);

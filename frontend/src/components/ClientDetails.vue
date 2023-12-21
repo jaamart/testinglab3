@@ -4,11 +4,15 @@
       {{ clients[0].clientname }}
     </h2>
     <div class="stats">
-      <p>Intern kundid: {{ clientid }}</p>
+      <p>Internt kundid: {{ clientid }}</p>
       <p data-cy="shortname">Kortnamn: {{ clients[0].shortname }}</p>
       <p>Bolagsform: {{ clients[0].corporateform }}</p>
       <p>Bokslut slutar i månad: {{ clients[0].endofyear }}</p>
       <p>Bank: {{ clients[0].bank }}</p>
+      <p>
+        Bokförs varje:
+        {{ clients[0].booksfrequency === 1 ? "Månad" : "Kvartal" }}
+      </p>
     </div>
     <div>
       <p class="placeholder-todo">Todo-List</p>
@@ -28,6 +32,7 @@ interface Client {
   shortname: string;
   endofyear: string;
   corporateform: string;
+  booksfrequency: number;
   bank: string;
   name: string;
 }
