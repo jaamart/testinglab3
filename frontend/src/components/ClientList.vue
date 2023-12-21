@@ -33,7 +33,7 @@ axios.get("/api/clients").then((res) => (clients.value = res.data));
 }
 h2 {
   font-size: 32px;
-  font-weight: 200;
+  font-weight: 400;
 }
 ul {
   padding: 0;
