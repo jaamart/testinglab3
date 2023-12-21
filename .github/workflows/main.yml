@@ -1,26 +1,21 @@
-# name: Cypress Tests
+name: Cypress Tests
 
-# on: push
+on: push
 
-# jobs:
-#   cypress-run:
-#     runs-on: ubuntu-22.04
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v4
-#       # Install NPM dependencies, cache them correctly
-#       # and run all Cypress tests
+jobs:
+  cypress-run:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Change working directory to frontend
+        run: cd frontend
 
-#       - name: Change working directory to frontend
-#         run: cd frontend
+      - name: Checkout
+        uses: actions/checkout@v4
+        # Install NPM dependencies, cache them correctly
+        # and run all Cypress tests
 
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: "14"
-
-#       - name: Install dependencies
-#         run: npm install
-
-#       - name: Run Cypress tests
-#         run: npx cypress run --config-file frontend/cypress.config.cjs
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm start
