@@ -11,11 +11,9 @@ jobs:
         # Install NPM dependencies, cache them correctly
         # and run all Cypress tests
 
-      - name: Change working directory to frontend
-        run: cd frontend
-
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          working-directory: ./frontend
           build: npm run build
           start: npm run dev
