@@ -56,7 +56,9 @@ app.get('/api/clients', async (req, res) => {
 })
 
 app.get('/api/client/:clientid', async (req, res) => {
-  const { rows } = await client.query('SELECT * FROM clients WHERE clientid = $1',[req.params.clientid])
+  const { rows } = await client.query(
+    'SELECT clients.*, months.*, bookkeeping.* FROM clients LEFT JOIN bookkeeping ON clients.clientid = bookkeeping.clientId LEFT JOIN months ON bookkeeping.monthId = months.monthId WHERE clients.clientid = $1'
+    ,[req.params.clientid])
   res.send(rows)
 })
 

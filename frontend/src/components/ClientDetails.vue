@@ -14,8 +14,13 @@
         {{ clients[0].booksfrequency === 1 ? "Månad" : "Kvartal" }}
       </p>
     </div>
-    <div>
-      <p class="placeholder-todo">Todo-List</p>
+    <div class="placeholder-todo">
+      <p>Bokföring</p>
+      <div v-for="client in clients">
+        {{ client.year }}
+        {{ client.monthname }}
+        {{ client.isbookkeepingdone ? "Färdigt" : "Kvar att göra" }}
+      </div>
     </div>
   </div>
 </template>
@@ -35,6 +40,9 @@ interface Client {
   booksfrequency: number;
   bank: string;
   name: string;
+  monthname: string;
+  year: string;
+  isbookkeepingdone: boolean;
 }
 
 const route = useRoute();
@@ -43,9 +51,10 @@ const clientid = computed<number>(() => {
   return Number(route.params.id);
 });
 
-axios
-  .get(`/api/client/${clientid.value}`)
-  .then((res) => (clients.value = res.data));
+axios.get(`/api/client/${clientid.value}`).then((res) => {
+  console.log(res);
+  clients.value = res.data;
+});
 
 watch(
   () => route.params.id,

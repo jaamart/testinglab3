@@ -53,9 +53,9 @@ app.get('/api', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.post('/api/clients', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, shortname, id, corpform, bank, endofyear } = req.body;
-        console.log(name, shortname, id, bank, endofyear, corpform);
-        const newClient = yield client.query('INSERT INTO clients (clientid, clientname, shortname, bank, endofyear, corporateform) VALUES ($1, $2, $3, $4, $5, $6)', [id, name, shortname, bank, endofyear, corpform]);
+        const { name, shortname, id, corpform, bank, endofyear, booksfrequency } = req.body;
+        console.log(name, shortname, id, bank, endofyear, corpform, booksfrequency);
+        const newClient = yield client.query('INSERT INTO clients (clientid, clientname, shortname, bank, endofyear, corporateform, booksfrequency) VALUES ($1, $2, $3, $4, $5, $6, $7)', [id, name, shortname, bank, endofyear, corpform, booksfrequency]);
         const newClientData = yield client.query('SELECT * FROM clients WHERE clientid = $1', [id]);
         res.status(200).json({ newClient: newClientData.rows[0] });
     }
@@ -71,7 +71,7 @@ app.get('/api/clients', (req, res) => __awaiter(void 0, void 0, void 0, function
     res.send(rows);
 }));
 app.get('/api/client/:clientid', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { rows } = yield client.query('SELECT * FROM clients WHERE clientid = $1', [req.params.clientid]);
+    const { rows } = yield client.query('SELECT clients.*, months.*, bookkeeping.* FROM clients LEFT JOIN bookkeeping ON clients.clientid = bookkeeping.clientId LEFT JOIN months ON bookkeeping.monthId = months.monthId WHERE clients.clientid = $1', [req.params.clientid]);
     res.send(rows);
 }));
 app.listen(port, () => {
