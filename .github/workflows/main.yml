@@ -29,7 +29,7 @@ jobs:
         run: sleep 10
 
       - name: Check server status
-        run: curl http://localhost:3000
+        run: curl http://localhost:3000/api/clients
 
       - name: Display server logs
         run: cat backend/server.log
