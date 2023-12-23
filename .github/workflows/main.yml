@@ -6,15 +6,15 @@ jobs:
   backend:
     runs-on: ubuntu-22.04
 
-    env:
-      PGURI: ${{ secrets.PGURI }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Print PGURI
-        run: echo "PGURI is ${#PGURI}"
+      - name: Set up environment variables
+        run: echo "PGURI=${{ secrets.PGURI }}" > .env
+
+      - name: Print length of env content
+        run: echo "Length of env $(wc -c < .env)"
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -26,11 +26,6 @@ jobs:
           npm i &&
           npm run build &&
           node index.js &
-        env:
-          CYPRESS_PGURI: ${{ secrets.PGURI }}
-
-      - name: Wait for backend to start
-        run: npx wait-on http://localhost:3000
 
   cypress-run:
     runs-on: ubuntu-22.04
