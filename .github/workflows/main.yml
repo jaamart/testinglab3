@@ -13,8 +13,8 @@ jobs:
       - name: Set up environment variables
         run: echo "PGURI=${{ secrets.PGURI }}" > .env
 
-      - name: Print length of env content
-        run: echo "Length of env $(wc -c < .env)"
+      - name: Print .env
+        run: cat .env
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
