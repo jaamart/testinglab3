@@ -19,10 +19,13 @@ jobs:
         run: cd backend &&
           npm i &&
           npm run build &&
-          node index.js &
+          node index.js > server.log 2>&1 &
         env:
           CYPRESS_PG: ${{ secrets.PG }}
           PGURI: ${{ secrets.PG }}
+
+      - name: Display server logs
+        run: cat backend/server.log
 
   cypress-run:
     runs-on: ubuntu-22.04
