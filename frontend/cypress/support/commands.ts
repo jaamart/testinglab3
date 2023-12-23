@@ -44,3 +44,14 @@ Cypress.Commands.add("resetDatabase", () => {
   }
     cy.exec(`psql -f init.sql ${pgUri}`);
 })
+
+
+Cypress.Commands.add("checkLocalServer", () => {
+  cy.request({
+    method: 'GET',
+    url: 'http://localhost:3000/api/clients',
+    failOnStatusCode: false,
+  }).then((response) => {
+    expect(response.status).to.eq(200);
+  });
+});
