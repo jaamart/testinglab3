@@ -40,6 +40,9 @@ jobs:
   cypress-run:
     runs-on: ubuntu-22.04
     steps:
+      - name: Check if server is running
+        run: curl http://localhost:3000
+
       - name: Checkout
         uses: actions/checkout@v4
         # Install NPM dependencies, cache them correctly
