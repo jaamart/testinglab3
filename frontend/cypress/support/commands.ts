@@ -38,6 +38,9 @@
 
 
 Cypress.Commands.add("resetDatabase", () => {
-  const pgUri = Cypress.env("PGURI")
-  cy.exec(`psql -f init.sql ${pgUri}`)
+  const pgUri = Cypress.env("CYPRESS_PGURI") || Cypress.env("PGURI");
+  if (!pgUri) {
+   throw Error ("DB Connection string missing")
+  }
+    cy.exec(`psql -f init.sql ${pgUri}`);
 })
