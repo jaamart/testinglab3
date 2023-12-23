@@ -16,10 +16,14 @@ jobs:
           node-version: "18"
 
       - name: Install backend dependencies
-        run: cd backend &&
+        run: |
+          echo "Before exec"
+          cd backend &&
           npm i &&
           npm run build &&
+          echo "After npm run build"
           exec node index.js
+          echo "After exec"
         env:
           CYPRESS_PG: ${{ secrets.PG }}
           PGURI: ${{ secrets.PG }}
