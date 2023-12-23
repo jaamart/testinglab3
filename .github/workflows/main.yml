@@ -6,6 +6,9 @@ jobs:
   backend:
     runs-on: ubuntu-22.04
 
+    env:
+      PGURI: ${{ secrets.PGURI }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,14 +21,16 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Set up environment variables
-        run: echo "PGURI=${{ secrets.PGURI }}" > .env
-
       - name: Install backend dependencies
         run: cd backend &&
           npm i &&
           npm run build &&
           node index.js &
+        env:
+          CYPRESS_PGURI: ${{ secrets.PGURI }}
+
+      - name: Wait for backend to start
+        run: npx wait-on http://localhost:3000
 
   cypress-run:
     runs-on: ubuntu-22.04
