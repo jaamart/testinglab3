@@ -15,9 +15,6 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Set permissions for server log
-        run: chmod +rw backend/server.log
-
       - name: Install backend dependencies
         run: |
           cd backend &&
