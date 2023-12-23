@@ -15,18 +15,24 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Set permissions for server log
+        run: chmod +rw backend/server.log
+
       - name: Install backend dependencies
         run: |
-          echo "Before exec"
           cd backend &&
           npm i &&
           npm run build &&
-          echo "After npm run build"
-          nohup sh -c 'exec node index.js' &
-          echo "After exec"
+          nohup sh -c 'exec node index.js' > server.log 2>&1 &
         env:
           CYPRESS_PG: ${{ secrets.PG }}
           PGURI: ${{ secrets.PG }}
+
+      - name: Wait for server to start
+        run: sleep 10
+
+      - name: Check server status
+        run: curl http://localhost:3000
 
       - name: Display server logs
         run: cat backend/server.log
