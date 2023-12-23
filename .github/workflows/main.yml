@@ -13,12 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up environment variables
-        run: echo "PGURI=${{ secrets.PG }}" > .env
-
-      - name: Print .env
-        run: cat .env
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -29,6 +23,8 @@ jobs:
           npm i &&
           npm run build &&
           node index.js &
+        env:
+          CYPRESS_PG: ${{ secrets.PG }}
 
   cypress-run:
     runs-on: ubuntu-22.04
