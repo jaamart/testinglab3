@@ -5,6 +5,10 @@ on: push
 jobs:
   backend:
     runs-on: ubuntu-22.04
+
+    env:
+      PGURI: ${{ secrets.PGURI  }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,6 +23,8 @@ jobs:
           npm i &&
           npm run build &&
           node index.js &
+        env:
+          CYPRESS_PGURI: ${{ env.PGURI }}
 
   cypress-run:
     runs-on: ubuntu-22.04

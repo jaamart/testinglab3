@@ -38,13 +38,6 @@
 
 
 Cypress.Commands.add("resetDatabase", () => {
-  cy.exec('psql -f init.sql "postgres://postgres:studio@localhost/postgres"')
+  const pgUri = Cypress.env("PGURI")
+  cy.exec(`psql -f init.sql ${pgUri}`)
 })
-
-// Cypress.Commands.add("resetDB", () => {
-//   cy.exec('C/Program Files/PostgreSQL/16/bin/psql --help')
-// })
-
-// Cypress.Commands.add("resetDB", () => {
-//   cy.exec('echo "hej"')
-// })
