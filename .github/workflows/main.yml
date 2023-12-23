@@ -40,6 +40,9 @@ jobs:
   cypress-run:
     runs-on: ubuntu-22.04
     steps:
+      - name: Wait for server to start
+        run: sleep 30
+
       - name: Check if server is running
         run: curl http://localhost:3000
 
