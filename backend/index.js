@@ -74,6 +74,21 @@ app.get('/api/client/:clientid', (req, res) => __awaiter(void 0, void 0, void 0,
     const { rows } = yield client.query('SELECT clients.*, months.*, bookkeeping.* FROM clients LEFT JOIN bookkeeping ON clients.clientid = bookkeeping.clientId LEFT JOIN months ON bookkeeping.monthId = months.monthId WHERE clients.clientid = $1', [req.params.clientid]);
     res.send(rows);
 }));
+app.put("/api/client/books", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, monthId, done, booksfreq } = req.body;
+    console.log(id, monthId, done, booksfreq);
+    if (booksfreq === 3) {
+        const monthTwo = monthId + 1;
+        const monthThree = monthId + 2;
+        console.log(monthTwo, monthThree);
+        yield client.query('UPDATE bookkeeping SET IsBookkeepingDone = $1 WHERE clientId = $2 AND monthId IN ($3, $4, $5)', [
+            done, id, monthId, monthTwo, monthThree
+        ]);
+    }
+    yield client.query('UPDATE bookkeeping SET IsBookkeepingDone = $1 WHERE clientId = $2 AND monthId = $3', [
+        done, id, monthId
+    ]);
+}));
 app.listen(port, () => {
     console.log(`Redo på ${port}`);
 });

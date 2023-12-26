@@ -2,6 +2,7 @@ import cors from 'cors'
 import * as dotenv from 'dotenv'
 import { Client } from 'pg'
 import express from 'express'
+import { log } from 'console'
 
 dotenv.config()
 
@@ -60,6 +61,28 @@ app.get('/api/client/:clientid', async (req, res) => {
     'SELECT clients.*, months.*, bookkeeping.* FROM clients LEFT JOIN bookkeeping ON clients.clientid = bookkeeping.clientId LEFT JOIN months ON bookkeeping.monthId = months.monthId WHERE clients.clientid = $1'
     ,[req.params.clientid])
   res.send(rows)
+})
+
+app.put("/api/client/books", async (req, res) => {
+  const {id, monthId, done, booksfreq} = req.body;
+  console.log(id, monthId, done, booksfreq);
+  if (booksfreq === 3) {
+    const monthTwo = monthId + 1
+    const monthThree = monthId + 2
+    console.log(monthTwo, monthThree);
+
+    await client.query(
+      'UPDATE bookkeeping SET IsBookkeepingDone = $1 WHERE clientId = $2 AND monthId IN ($3, $4, $5)', [
+        done, id, monthId, monthTwo, monthThree
+      ]
+    )
+  }
+
+  await client.query(
+    'UPDATE bookkeeping SET IsBookkeepingDone = $1 WHERE clientId = $2 AND monthId = $3', [
+      done, id, monthId
+    ]
+  )
 })
 
 app.listen(port, () => {

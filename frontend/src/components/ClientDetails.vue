@@ -14,19 +14,16 @@
         {{ clients[0].booksfrequency === 1 ? "Månad" : "Kvartal" }}
       </p>
     </div>
+
     <div class="placeholder-todo">
-      <p>Bokföring</p>
-      <div v-for="client in clients">
-        {{ client.year }}
-        {{ client.monthname }}
-        {{ client.isbookkeepingdone ? "Färdigt" : "Kvar att göra" }}
-      </div>
+      <ClientBookkeeping :booksfrequency="clients[0].booksfrequency" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, Ref, computed, watch } from "vue";
+import ClientBookkeeping from "./ClientBookkeeping.vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 const clients: Ref<Client[]> = ref([]);
@@ -41,6 +38,7 @@ interface Client {
   bank: string;
   name: string;
   monthname: string;
+  monthid: number;
   year: string;
   isbookkeepingdone: boolean;
 }
@@ -52,7 +50,6 @@ const clientid = computed<number>(() => {
 });
 
 axios.get(`/api/client/${clientid.value}`).then((res) => {
-  console.log(res);
   clients.value = res.data;
 });
 
@@ -65,11 +62,19 @@ watch(
 </script>
 
 <style scoped>
+h2 {
+  font-size: 32px;
+}
+p {
+  margin: 4px;
+  font-size: 24px;
+}
 .placeholder-todo {
   width: 80vw;
   height: 70vh;
   background-color: #eee;
 }
+
 .stats {
   display: flex;
   justify-content: center;
@@ -81,14 +86,5 @@ watch(
   padding: 10px;
   font-size: 20px;
   border-radius: 30px;
-}
-
-h2 {
-  font-size: 32px;
-}
-
-p {
-  margin: 4px;
-  font-size: 24px;
 }
 </style>

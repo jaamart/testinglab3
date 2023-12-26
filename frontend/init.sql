@@ -47,13 +47,22 @@ CREATE TABLE bookkeeping (
   IsBookkeepingDone BOOLEAN
 );
 
-INSERT INTO
-  bookkeeping (clientId, monthId, year, IsBookkeepingDone)
-VALUES
- (1, 1, 2024, true),
- (1, 2, 2024, true),
- (1, 3, 2024, false),
- (2, 1, 2024, true),
- (2, 2, 2024, false),
- (3, 1, 2024, true),
- (4, 1, 2024, true);
+CREATE OR REPLACE FUNCTION insert_bookkeeping_data(
+  clientID INT
+)
+RETURNS VOID AS $$
+DECLARE
+  i INT;
+BEGIN
+  FOR i IN 1..12 LOOP
+    -- Använd INSERT INTO för att lägga till rader i tabellen
+    INSERT INTO bookkeeping (clientId, monthId, year, IsBookkeepingDone)
+    VALUES (clientID, i, 2024, false);
+  END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT insert_bookkeeping_data(1);
+SELECT insert_bookkeeping_data(2);
+SELECT insert_bookkeeping_data(3);
+SELECT insert_bookkeeping_data(4);
