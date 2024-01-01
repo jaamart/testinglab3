@@ -99,17 +99,28 @@ const clientsWithQuarterlyBooks = computed(() => {
 
 <style scoped>
 button {
-  padding: 5px 10px;
+  padding: 2px 10px;
   margin-bottom: 10px;
 }
 .bookkeeping {
   width: 30%;
   background-color: cadetblue;
 }
+
+@keyframes done {
+  from {
+    text-decoration-color: transparent;
+    background-color: cadetblue;
+  }
+  to {
+    text-decoration-color: auto;
+    background-color: grey;
+  }
+}
 .booksdone {
-  background-color: #555;
-  color: #888;
   text-decoration: line-through;
+  background-color: grey;
+  animation: done 2s;
 }
 h3 {
   font-size: 26px;

@@ -58,8 +58,13 @@ app.get('/api/clients', async (req, res) => {
 
 app.get('/api/client/:clientid', async (req, res) => {
   const { rows } = await client.query(
-    'SELECT clients.*, months.*, bookkeeping.* FROM clients LEFT JOIN bookkeeping ON clients.clientid = bookkeeping.clientId LEFT JOIN months ON bookkeeping.monthId = months.monthId WHERE clients.clientid = $1'
-    ,[req.params.clientid])
+    `SELECT clients.*, months.*, bookkeeping.*, vat.*
+    FROM clients
+    LEFT JOIN bookkeeping ON clients.clientid = bookkeeping.clientId
+    LEFT JOIN vat ON clients.clientid = vat.clientId AND bookkeeping.MonthID = vat.MonthID
+    LEFT JOIN months ON bookkeeping.monthId = months.monthId
+    WHERE clients.clientid = $1`,
+    [req.params.clientid])
   res.send(rows)
 })
 
