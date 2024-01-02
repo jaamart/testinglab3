@@ -27,7 +27,7 @@
 
     <div class="placeholder-todo">
       <ClientBookkeeping :booksfrequency="clients[0].booksfrequency" />
-      <ClientVAT :vatfrequency="clients[0].vatfrequency" />
+      <ClientVAT :clients="clients" />
     </div>
   </div>
 </template>

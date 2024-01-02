@@ -1,32 +1,40 @@
 <template>
   <div class="vat">
     <h3>Moms</h3>
-    <div v-if="vatfrequency === 1">
-      <p>månad</p>
-      <div v-for="client in clients">
+
+    <div v-if="clients.clients[0].vatfrequency === 1">
+      <div
+        v-for="client in clients.clients"
+        :class="{ vatdone: client.isvatdone }"
+        :key="client.monthid"
+      >
         {{ client.year }}
-        {{ client.monthname }}
-        {{ client.isvatdone }}
+        {{ client.monthname }}:
+        <button @click="markVAT(client)">
+          {{ !client.isvatdone ? "Färdig" : "Ångra" }}
+        </button>
       </div>
     </div>
-    <div v-else-if="vatfrequency === 3">
-      <p>kvartal</p>
+    <div v-else-if="clients.clients[0].vatfrequency === 3">
+      <div v-for="client in clients.clients">
+        {{ client.year }}
+        Kvartal:
+        {{ !client.isvatdone ? "Färdig" : "Ångra" }}
+      </div>
     </div>
-    <div v-else>
-      <p>År</p>
+    <div v-if="clients.clients[0].vatfrequency === 12">
+      <div v-for="client in clients.clients">
+        {{ client.year }}
+        År:
+        {{ !client.isvatdone ? "Färdig" : "Ångra" }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, computed } from "vue";
 import axios from "axios";
-import { useRoute } from "vue-router";
-const clients: Ref<Client[]> = ref([]);
-
-defineProps({
-  vatfrequency: Number,
-});
+const clients = defineProps(["clients"]);
 
 interface Client {
   clientname: string;
@@ -44,15 +52,22 @@ interface Client {
   isvatdone: boolean;
 }
 
-const route = useRoute();
-
-const clientid = computed<number>(() => {
-  return Number(route.params.id);
-});
-
-axios.get(`/api/client/${clientid.value}`).then((res) => {
-  clients.value = res.data;
-});
+function markVAT(client: Client) {
+  client.isvatdone = !client.isvatdone;
+  axios
+    .put("/api/client/vat", {
+      id: client.clientid,
+      monthId: client.monthid,
+      done: client.isvatdone,
+      vatfreq: client.booksfrequency,
+    })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 </script>
 
 <style scope>
@@ -62,13 +77,13 @@ button {
 }
 .vat {
   width: 30%;
-  background-color: cadetblue;
+  background-color: lightskyblue;
 }
 
 @keyframes done {
   from {
     text-decoration-color: transparent;
-    background-color: cadetblue;
+    background-color: lightskyblue;
   }
   to {
     text-decoration-color: auto;
