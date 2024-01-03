@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import ClientList from "./components/ClientList.vue";
+
+// -[] inlogg
+// -[] årsmoms
+// -[] lägg till ett år
+// -[] översiktssidor
 </script>
 
 <template>

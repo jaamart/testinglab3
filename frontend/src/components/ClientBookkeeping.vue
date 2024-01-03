@@ -1,7 +1,7 @@
 <template>
   <div class="bookkeeping">
     <h3>Bokföring</h3>
-    <div v-if="booksfrequency === 1">
+    <div v-if="clients.clients[0].booksfrequency === 1">
       <div
         v-for="client in clientsOrderedByMonths"
         :class="{ booksdone: client.isbookkeepingdone }"
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div v-else-if="booksfrequency === 3">
+    <div v-else-if="clients.clients[0].booksfrequency === 3">
       <div
         v-for="(client, index) in clientsWithQuarterlyBooks"
         :class="{ booksdone: client.isbookkeepingdone }"
@@ -32,14 +32,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, computed } from "vue";
+import { ref, computed } from "vue";
 import axios from "axios";
-import { useRoute } from "vue-router";
-const clients: Ref<Client[]> = ref([]);
 
-defineProps({
-  booksfrequency: Number,
-});
+const clients = defineProps(["clients"]);
+const clientsQuarterly = ref(clients);
 
 interface Client {
   clientname: string;
@@ -56,16 +53,6 @@ interface Client {
   isbookkeepingdone: boolean;
 }
 
-const route = useRoute();
-
-const clientid = computed<number>(() => {
-  return Number(route.params.id);
-});
-
-axios.get(`/api/client/${clientid.value}`).then((res) => {
-  clients.value = res.data;
-});
-
 function markBookkeeping(client: Client) {
   client.isbookkeepingdone = !client.isbookkeepingdone;
   axios
@@ -81,19 +68,18 @@ function markBookkeeping(client: Client) {
     .catch((error) => {
       console.error(error);
     });
-  axios.get(`/api/client/${clientid.value}`).then((res) => {
-    clients.value = res.data;
-  });
 }
 
 const clientsOrderedByMonths = computed(() => {
-  return clients.value.sort((a, b) => a.monthid - b.monthid);
+  return clientsQuarterly.value.clients.sort(
+    (a: Client, b: Client) => a.monthid - b.monthid
+  );
 });
 
 const clientsWithQuarterlyBooks = computed(() => {
-  return clients.value
-    .sort((a, b) => a.monthid - b.monthid)
-    .filter((_, i) => i % 3 === 0);
+  return clientsQuarterly.value.clients
+    .sort((a: Client, b: Client) => a.monthid - b.monthid)
+    .filter((_: Client, i: number) => i % 3 === 0);
 });
 </script>
 

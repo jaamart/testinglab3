@@ -22,8 +22,10 @@ When('Jag fyller i formuläret och klickar på submit', () => {
   cy.get('[data-cy="client-shortname"').type('TEST')
   cy.get('[data-cy="client-id"').type('9999')
   cy.get('[data-cy="client-bank"').type('Falkenbergs Sparbank')
+  cy.get('[data-cy="client-form"').type('AB')
   cy.get('[data-cy="client-endofyear"').type('8')
   cy.get('[data-cy="client-booksfreq"').type('1')
+  cy.get('[data-cy="client-vatfreq"').type('12')
   cy.get('[data-cy="add-client"').click()
 })
 

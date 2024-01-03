@@ -2,7 +2,6 @@ import cors from 'cors'
 import * as dotenv from 'dotenv'
 import { Client } from 'pg'
 import express from 'express'
-import { log } from 'console'
 
 dotenv.config()
 
@@ -27,13 +26,13 @@ app.get('/api', async (req, res) => {
 
 app.post('/api/clients', async (req, res) => {
   try {
-    const {name, shortname, id, corpform, bank, endofyear, booksfrequency} = req.body
-    console.log(name, shortname, id, bank, endofyear, corpform, booksfrequency);
+    const {name, shortname, id, corpform, bank, endofyear, booksfrequency, vatfrequency} = req.body
+    console.log(name, shortname, id, bank, endofyear, corpform, booksfrequency, vatfrequency);
 
 
     const newClient = await client.query(
-      'INSERT INTO clients (clientid, clientname, shortname, bank, endofyear, corporateform, booksfrequency) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-      [id, name, shortname, bank, endofyear, corpform, booksfrequency]
+      'INSERT INTO clients (clientid, clientname, shortname, bank, endofyear, corporateform, booksfrequency, vatfrequency) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+      [id, name, shortname, bank, endofyear, corpform, booksfrequency, vatfrequency]
       )
     const newClientData = await client.query(
       'SELECT * FROM clients WHERE clientid = $1', [id]
@@ -74,7 +73,6 @@ app.put("/api/client/books", async (req, res) => {
   if (booksfreq === 3) {
     const monthTwo = monthId + 1
     const monthThree = monthId + 2
-    console.log(monthTwo, monthThree);
 
     await client.query(
       'UPDATE bookkeeping SET IsBookkeepingDone = $1 WHERE clientId = $2 AND monthId IN ($3, $4, $5)', [
@@ -85,6 +83,28 @@ app.put("/api/client/books", async (req, res) => {
 
   await client.query(
     'UPDATE bookkeeping SET IsBookkeepingDone = $1 WHERE clientId = $2 AND monthId = $3', [
+      done, id, monthId
+    ]
+  )
+})
+
+app.put("/api/client/vat", async (req, res) => {
+  const {id, monthId, done, vatfreq} = req.body;
+  console.log(id, monthId, done, vatfreq);
+
+  if (vatfreq === 3) {
+    const monthTwo = monthId + 1
+    const monthThree = monthId + 2
+
+    await client.query(
+      'UPDATE vat SET IsVATDone = $1 WHERE clientId = $2 AND monthId IN ($3, $4, $5)', [
+        done, id, monthId, monthTwo, monthThree
+      ]
+    )
+  }
+
+  await client.query(
+    'UPDATE vat SET IsVATDone = $1 WHERE clientId = $2 AND monthId = $3', [
       done, id, monthId
     ]
   )

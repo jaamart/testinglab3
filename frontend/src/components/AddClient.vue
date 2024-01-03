@@ -66,6 +66,15 @@
           placeholder="1 för månad, 3 för kvartal"
         />
       </label>
+      <label>
+        Momsredovisningsperiod
+        <input
+          data-cy="client-vatfreq"
+          type="text"
+          v-model="clientvatfreq"
+          placeholder="1 för månad, 3 för kvartal, 12 för år"
+        />
+      </label>
       <button data-cy="add-client" type="submit">Lägg till i databasen</button>
     </form>
 
@@ -90,6 +99,9 @@
       <div data-cy="incoming-client-booksfreq">
         {{ addedClient.newClient.booksfrequency }}
       </div>
+      <div data-cy="incoming-client-vatfreq">
+        {{ addedClient.newClient.vatfrequency }}
+      </div>
     </div>
   </div>
 </template>
@@ -105,13 +117,13 @@ const clientCorpForm = ref("");
 const clientbank = ref("");
 const clienteoy = ref(0);
 const clientbooksfreq = ref("");
+const clientvatfreq = ref("");
 const addedClient = ref();
 const clients = ref([]);
 
 axios.get("/api/clients").then((res) => (clients.value = res.data));
 
 function addClient() {
-  console.log("skickar data");
   axios
     .post("/api/clients", {
       id: clientid.value,
@@ -121,6 +133,7 @@ function addClient() {
       bank: clientbank.value,
       endofyear: clienteoy.value,
       booksfrequency: clientbooksfreq.value,
+      vatfrequency: clientvatfreq.value,
     })
     .then((res) => {
       console.log(res);
@@ -153,6 +166,10 @@ button {
 button:hover {
   background-color: olive;
   box-shadow: 5px 5px 15px black;
+}
+
+input[type="text"] {
+  width: 100%;
 }
 
 label {

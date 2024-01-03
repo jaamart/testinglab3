@@ -26,7 +26,7 @@
     </div>
 
     <div class="placeholder-todo">
-      <ClientBookkeeping :booksfrequency="clients[0].booksfrequency" />
+      <ClientBookkeeping :clients="clients" />
       <ClientVAT :clients="clients" />
     </div>
   </div>

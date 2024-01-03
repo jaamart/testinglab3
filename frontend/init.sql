@@ -15,9 +15,9 @@ INSERT INTO
   clients (clientid, clientname, shortname, corporateform, bank, endofyear, booksfrequency, VATfrequency)
 VALUES
   (1, 'Krebet Redovisning AB', 'Krebet', 'AB', 'Sparbanken', 2, 1, 1),
-  (2, 'Martikainen Måleri', 'M Måleri', 'EF', 'SEB', 12, 3, 3),
-  (3, 'Yellow Beak', 'YB', 'AB', 'Svea Bank', 8, 3, 3),
-  (4, 'TRIM-LINE Borås', 'Trim-Line', 'EF', 'Nordea', 12, 1, 12);
+  (2, 'Martikainen Måleri', 'M Måleri', 'EF', 'SEB', 12, 1, 3),
+  (3, 'Yellow Beak', 'YB', 'AB', 'Svea Bank', 8, 3, 1),
+  (4, 'TRIM-LINE Borås', 'Trim-Line', 'EF', 'Nordea', 12, 3, 12);
 
 CREATE TABLE months (
   monthId INTEGER PRIMARY KEY,

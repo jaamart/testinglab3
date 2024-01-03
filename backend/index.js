@@ -85,12 +85,25 @@ app.put("/api/client/books", (req, res) => __awaiter(void 0, void 0, void 0, fun
     if (booksfreq === 3) {
         const monthTwo = monthId + 1;
         const monthThree = monthId + 2;
-        console.log(monthTwo, monthThree);
         yield client.query('UPDATE bookkeeping SET IsBookkeepingDone = $1 WHERE clientId = $2 AND monthId IN ($3, $4, $5)', [
             done, id, monthId, monthTwo, monthThree
         ]);
     }
     yield client.query('UPDATE bookkeeping SET IsBookkeepingDone = $1 WHERE clientId = $2 AND monthId = $3', [
+        done, id, monthId
+    ]);
+}));
+app.put("/api/client/vat", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, monthId, done, vatfreq } = req.body;
+    console.log(id, monthId, done, vatfreq);
+    if (vatfreq === 3) {
+        const monthTwo = monthId + 1;
+        const monthThree = monthId + 2;
+        yield client.query('UPDATE vat SET IsVATDone = $1 WHERE clientId = $2 AND monthId IN ($3, $4, $5)', [
+            done, id, monthId, monthTwo, monthThree
+        ]);
+    }
+    yield client.query('UPDATE vat SET IsVATDone = $1 WHERE clientId = $2 AND monthId = $3', [
         done, id, monthId
     ]);
 }));

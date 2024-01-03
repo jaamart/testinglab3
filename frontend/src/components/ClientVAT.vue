@@ -15,11 +15,18 @@
         </button>
       </div>
     </div>
+
     <div v-else-if="clients.clients[0].vatfrequency === 3">
-      <div v-for="client in clients.clients">
+      <div
+        v-for="(client, index) in clientsWithQuarterlyVAT"
+        :class="{ vatdone: client.isvatdone }"
+        :key="client.monthid"
+      >
         {{ client.year }}
-        Kvartal:
-        {{ !client.isvatdone ? "Färdig" : "Ångra" }}
+        Kvartal {{ index + 1 }}
+        <button @click="markVAT(client)">
+          {{ !client.isvatdone ? "Färdig" : "Ångra" }}
+        </button>
       </div>
     </div>
     <div v-if="clients.clients[0].vatfrequency === 12">
@@ -34,7 +41,10 @@
 
 <script setup lang="ts">
 import axios from "axios";
+import { computed, ref } from "vue";
+
 const clients = defineProps(["clients"]);
+const clientsQuarterly = ref(clients);
 
 interface Client {
   clientname: string;
@@ -68,11 +78,17 @@ function markVAT(client: Client) {
       console.error(error);
     });
 }
+
+const clientsWithQuarterlyVAT = computed(() => {
+  return clientsQuarterly.value.clients
+    .sort((a: Client, b: Client) => a.monthid - b.monthid)
+    .filter((_: Client, i: number) => i % 3 === 0);
+});
 </script>
 
 <style scope>
 button {
-  padding: 5px 10px;
+  padding: 2px 10px;
   margin-bottom: 10px;
 }
 .vat {
