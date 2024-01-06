@@ -110,6 +110,14 @@ app.put("/api/client/vat", async (req, res) => {
   )
 })
 
+app.delete('/api/delete/:clientid', async (req, res) => {
+  const {id} = req.body
+  await client.query("DELETE FROM bookkeeping WHERE clientid = $1", [id])
+  await client.query("DELETE FROM vat WHERE clientid = $1", [id])
+  await client.query("DELETE FROM clients WHERE clientid = $1", [id])
+  res.send(`Client with id ${id} deleted!`)
+})
+
 app.listen(port, () => {
   console.log(`Redo på ${port}`)
 })

@@ -16,5 +16,5 @@ Scenario: Lägg till en ny kund
 
 Scenario: Välj en kund från listan
   Given Sidan har laddat in en lista med kunder och visar den till vänster
-  When Jag klickar på en av dem
+  When Jag klickar på den sista i listan
   Then Sidan visar information om rätt kund

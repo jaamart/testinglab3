@@ -53,9 +53,9 @@ app.get('/api', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.post('/api/clients', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, shortname, id, corpform, bank, endofyear, booksfrequency } = req.body;
-        console.log(name, shortname, id, bank, endofyear, corpform, booksfrequency);
-        const newClient = yield client.query('INSERT INTO clients (clientid, clientname, shortname, bank, endofyear, corporateform, booksfrequency) VALUES ($1, $2, $3, $4, $5, $6, $7)', [id, name, shortname, bank, endofyear, corpform, booksfrequency]);
+        const { name, shortname, id, corpform, bank, endofyear, booksfrequency, vatfrequency } = req.body;
+        console.log(name, shortname, id, bank, endofyear, corpform, booksfrequency, vatfrequency);
+        const newClient = yield client.query('INSERT INTO clients (clientid, clientname, shortname, bank, endofyear, corporateform, booksfrequency, vatfrequency) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [id, name, shortname, bank, endofyear, corpform, booksfrequency, vatfrequency]);
         const newClientData = yield client.query('SELECT * FROM clients WHERE clientid = $1', [id]);
         res.status(200).json({ newClient: newClientData.rows[0] });
     }
@@ -106,6 +106,13 @@ app.put("/api/client/vat", (req, res) => __awaiter(void 0, void 0, void 0, funct
     yield client.query('UPDATE vat SET IsVATDone = $1 WHERE clientId = $2 AND monthId = $3', [
         done, id, monthId
     ]);
+}));
+app.delete('/api/delete/:clientid', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.body;
+    yield client.query("DELETE FROM bookkeeping WHERE clientid = $1", [id]);
+    yield client.query("DELETE FROM vat WHERE clientid = $1", [id]);
+    yield client.query("DELETE FROM clients WHERE clientid = $1", [id]);
+    res.send(`Client with id ${id} deleted!`);
 }));
 app.listen(port, () => {
     console.log(`Redo på ${port}`);

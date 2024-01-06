@@ -4,12 +4,13 @@
 
     <div v-if="clients.clients[0].vatfrequency === 1">
       <div
+        data-cy="test-div"
         v-for="client in clients.clients"
         :class="{ vatdone: client.isvatdone }"
         :key="client.monthid"
       >
         {{ client.year }}
-        {{ client.monthname }}:
+        {{ client.monthname }}
         <button @click="markVAT(client)">
           {{ !client.isvatdone ? "Färdig" : "Ångra" }}
         </button>
@@ -103,12 +104,12 @@ button {
   }
   to {
     text-decoration-color: auto;
-    background-color: grey;
+    background-color: rgb(128, 128, 128);
   }
 }
 .vatdone {
   text-decoration: line-through;
-  background-color: grey;
+  background-color: rgb(128, 128, 128);
   animation: done 2s;
 }
 h3 {

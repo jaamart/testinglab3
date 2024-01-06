@@ -4,16 +4,22 @@
       {{ clients[0].clientname }}
     </h2>
     <div class="stats">
-      <p>Internt kundid: {{ clientid }}</p>
-      <p data-cy="shortname">Kortnamn: {{ clients[0].shortname }}</p>
-      <p>Bolagsform: {{ clients[0].corporateform }}</p>
-      <p>Bokslut slutar i månad: {{ clients[0].endofyear }}</p>
-      <p>Bank: {{ clients[0].bank }}</p>
-      <p>
+      <div class="info">Internt kundid: {{ clientid }}</div>
+      <div class="info" data-cy="shortname">
+        Kortnamn: {{ clients[0].shortname }}
+      </div>
+      <div class="info" data-cy="corporateform">
+        Bolagsform: {{ clients[0].corporateform }}
+      </div>
+      <div class="info" data-cy="endofyear">
+        Bokslut slutar i månad: {{ clients[0].endofyear }}
+      </div>
+      <div class="info" data-cy="bank">Bank: {{ clients[0].bank }}</div>
+      <div class="info" data-cy="booksfrequency">
         Bokförs varje
         {{ clients[0].booksfrequency === 1 ? "månad" : "kvartal" }}
-      </p>
-      <p>
+      </div>
+      <div class="info" data-cy="vatfrequency">
         Moms redovisas varje
         {{
           clients[0].vatfrequency === 1
@@ -22,7 +28,8 @@
             ? "kvartal"
             : "år"
         }}
-      </p>
+      </div>
+      <button class="remove" @click="removeClient">Ta bort kund</button>
     </div>
 
     <div class="placeholder-todo">
@@ -35,7 +42,7 @@
 <script setup lang="ts">
 import { ref, Ref, computed, watch } from "vue";
 import ClientBookkeeping from "./ClientBookkeeping.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import ClientVAT from "./ClientVAT.vue";
 const clients: Ref<Client[]> = ref([]);
@@ -57,6 +64,7 @@ interface Client {
 }
 
 const route = useRoute();
+const router = useRouter();
 
 const clientid = computed<number>(() => {
   return Number(route.params.id);
@@ -72,15 +80,25 @@ watch(
     axios.get(`/api/client/${newID}`).then((res) => (clients.value = res.data));
   }
 );
+
+function removeClient() {
+  console.log("removing", clientid.value);
+  confirm("Är du säker? Detta går inte att ångra!");
+  axios
+    .delete(`/api/delete/${clientid.value}`, {
+      data: {
+        id: clientid.value,
+      },
+    })
+    .then(() => {
+      router.push("/");
+    });
+}
 </script>
 
 <style scoped>
 h2 {
   font-size: 32px;
-}
-p {
-  margin: 4px;
-  font-size: 24px;
 }
 .placeholder-todo {
   width: 80vw;
@@ -96,10 +114,21 @@ p {
   flex-wrap: wrap;
 }
 
-.stats p {
+.stats div {
+  margin: 4px;
   background-color: #ccc;
   padding: 10px;
   font-size: 20px;
   border-radius: 30px;
+}
+
+.remove {
+  margin: 4px;
+  background-color: #ccc;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 30px;
+  background-color: darkred;
+  color: #ccc;
 }
 </style>

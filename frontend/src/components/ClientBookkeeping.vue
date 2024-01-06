@@ -3,6 +3,7 @@
     <h3>Bokföring</h3>
     <div v-if="clients.clients[0].booksfrequency === 1">
       <div
+        data-cy="test-div"
         v-for="client in clientsOrderedByMonths"
         :class="{ booksdone: client.isbookkeepingdone }"
         :key="client.monthid"
@@ -86,7 +87,6 @@ const clientsWithQuarterlyBooks = computed(() => {
 <style scoped>
 button {
   padding: 2px 10px;
-  margin-bottom: 10px;
 }
 .bookkeeping {
   width: 30%;
@@ -100,12 +100,12 @@ button {
   }
   to {
     text-decoration-color: auto;
-    background-color: grey;
+    background-color: rgb(128, 128, 128);
   }
 }
 .booksdone {
   text-decoration: line-through;
-  background-color: grey;
+  background-color: rgb(128, 128, 128);
   animation: done 2s;
 }
 h3 {

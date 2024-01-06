@@ -42,12 +42,16 @@ Given('Sidan har laddat in en lista med kunder och visar den till vänster', () 
   cy.get('ul > li')
 })
 
-When('Jag klickar på en av dem', () => {
-  cy.get('ul > li:first > a').click()
+When('Jag klickar på den sista i listan', () => {
+  cy.get('ul > li:last > a').click()
 })
 
 Then('Sidan visar information om rätt kund', ()=> {
-  let one, two
-  cy.get('ul > li:first > a').contains('Krebet')
-  cy.get('[data-cy="shortname"').contains('Krebet')
+  cy.get('ul > li:last > a').contains('TEST')
+  cy.get('[data-cy="shortname"').contains('TEST')
+  cy.get('[data-cy="corporateform"').contains('AB')
+  cy.get('[data-cy="endofyear"').contains('8')
+  cy.get('[data-cy="bank"').contains('Falkenbergs Sparbank')
+  cy.get('[data-cy="booksfrequency"').contains('månad')
+  cy.get('[data-cy="vatfrequency"').contains('år')
 })
