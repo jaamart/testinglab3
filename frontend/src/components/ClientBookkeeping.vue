@@ -90,13 +90,13 @@ button {
 }
 .bookkeeping {
   width: 30%;
-  background-color: cadetblue;
+  background-color: #619b8a;
 }
 
 @keyframes done {
   from {
     text-decoration-color: transparent;
-    background-color: cadetblue;
+    background-color: #619b8a;
   }
   to {
     text-decoration-color: auto;

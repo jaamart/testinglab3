@@ -29,7 +29,6 @@ app.post('/api/clients', async (req, res) => {
     const {name, shortname, id, corpform, bank, endofyear, booksfrequency, vatfrequency} = req.body
     console.log(name, shortname, id, bank, endofyear, corpform, booksfrequency, vatfrequency);
 
-
     const newClient = await client.query(
       'INSERT INTO clients (clientid, clientname, shortname, bank, endofyear, corporateform, booksfrequency, vatfrequency) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
       [id, name, shortname, bank, endofyear, corpform, booksfrequency, vatfrequency]

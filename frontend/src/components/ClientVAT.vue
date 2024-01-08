@@ -30,13 +30,7 @@
         </button>
       </div>
     </div>
-    <div v-if="clients.clients[0].vatfrequency === 12">
-      <div v-for="client in clients.clients">
-        {{ client.year }}
-        År:
-        {{ !client.isvatdone ? "Färdig" : "Ångra" }}
-      </div>
-    </div>
+    <div v-if="clients.clients[0].vatfrequency === 12"></div>
   </div>
 </template>
 
@@ -94,13 +88,13 @@ button {
 }
 .vat {
   width: 30%;
-  background-color: lightskyblue;
+  background-color: #f4b942;
 }
 
 @keyframes done {
   from {
     text-decoration-color: transparent;
-    background-color: lightskyblue;
+    background-color: #f4b942;
   }
   to {
     text-decoration-color: auto;

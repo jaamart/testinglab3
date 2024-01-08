@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UML Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+  </head>
+  <body>
+    <pre class="mermaid" style="background-color: #eee">
+    ---
+    title: Lägga till ny kund
+    ---
+    sequenceDiagram
+
+    actor U as User
+    participant F as Frontend
+    participant E as Express
+    participant P as PostgreSQL
+
+    U->>F: Fyller i grundläggande info i formuläret
+    F->>E: Axios-POST
+    E->>P: INSERT INTO clients
+    P-->>E: SELECT * FROM clients
+    E-->>F: Respons med nyinlagd kund
+    F-->>U: Ser "Inlagd kund" som bekräftelse
+
+  </pre
+    >
+    <pre class="mermaid" style="background-color: #eed">
+      ---
+      title: Markera period som klar
+      ---
+      sequenceDiagram
+
+      actor U as User
+      participant F as Frontend
+      participant E as Express
+      participant P as PostgreSQL
+
+      U->>F: Väljer kund, område och klickar på perioden som är klar
+      F->>E: Axios-PUT
+      E->>P: UPDATE ... 1-3 månader
+      P-->>E: ---
+      E-->>F: ---
+      rect rgb(0, 200, 200)
+      alt Period tidigare markerat
+        F-->>U: CSS ändras efter info från DB (när sidan laddas)
+      else Period nyss markerat
+        F-->>U: CSS ändras av en ternary operator (@click)
+      note right of U: Ser överstuken text och grå bakgrund
+      end
+      end
+
+
+    </pre>
+  </body>
+</html>

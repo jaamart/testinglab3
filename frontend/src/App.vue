@@ -31,13 +31,12 @@ import ClientList from "./components/ClientList.vue";
   left: 0;
   top: 0;
   height: 100vh;
-  background-color: goldenrod;
+  background-color: #f4b942;
 }
 .maincontent {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   margin-left: 250px;
 }
 </style>

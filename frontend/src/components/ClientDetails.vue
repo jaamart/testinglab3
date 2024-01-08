@@ -4,30 +4,38 @@
       {{ clients[0].clientname }}
     </h2>
     <div class="stats">
-      <div class="info">Internt kundid: {{ clientid }}</div>
+      <div class="info">
+        Internt kundid: <strong>{{ clientid }} </strong>
+      </div>
       <div class="info" data-cy="shortname">
-        Kortnamn: {{ clients[0].shortname }}
+        Kortnamn: <strong> {{ clients[0].shortname }}</strong>
       </div>
       <div class="info" data-cy="corporateform">
-        Bolagsform: {{ clients[0].corporateform }}
+        Bolagsform: <strong> {{ clients[0].corporateform }} </strong>
       </div>
       <div class="info" data-cy="endofyear">
-        Bokslut slutar i månad: {{ clients[0].endofyear }}
+        Bokslut slutar i månad: <strong> {{ clients[0].endofyear }} </strong>
       </div>
-      <div class="info" data-cy="bank">Bank: {{ clients[0].bank }}</div>
+      <div class="info" data-cy="bank">
+        Bank: <strong> {{ clients[0].bank }} </strong>
+      </div>
       <div class="info" data-cy="booksfrequency">
         Bokförs varje
-        {{ clients[0].booksfrequency === 1 ? "månad" : "kvartal" }}
+        <strong>
+          {{ clients[0].booksfrequency === 1 ? "månad" : "kvartal" }}
+        </strong>
       </div>
       <div class="info" data-cy="vatfrequency">
         Moms redovisas varje
-        {{
-          clients[0].vatfrequency === 1
-            ? "månad"
-            : clients[0].vatfrequency === 3
-            ? "kvartal"
-            : "år"
-        }}
+        <strong>
+          {{
+            clients[0].vatfrequency === 1
+              ? "månad"
+              : clients[0].vatfrequency === 3
+              ? "kvartal"
+              : "år"
+          }}
+        </strong>
       </div>
       <button class="remove" @click="removeClient">Ta bort kund</button>
     </div>
@@ -35,6 +43,7 @@
     <div class="placeholder-todo">
       <ClientBookkeeping :clients="clients" />
       <ClientVAT :clients="clients" />
+      <ClientEndOfYear :clients="clients" />
     </div>
   </div>
 </template>
@@ -45,6 +54,7 @@ import ClientBookkeeping from "./ClientBookkeeping.vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import ClientVAT from "./ClientVAT.vue";
+import ClientEndOfYear from "./ClientEndOfYear.vue";
 const clients: Ref<Client[]> = ref([]);
 
 interface Client {
@@ -101,11 +111,12 @@ h2 {
   font-size: 32px;
 }
 .placeholder-todo {
-  width: 80vw;
+  width: 100%;
   height: 70vh;
-  background-color: #eee;
+  background-color: #ddd;
   display: flex;
   justify-content: space-around;
+  border-radius: 10px;
 }
 
 .stats {
@@ -114,10 +125,10 @@ h2 {
   flex-wrap: wrap;
 }
 
-.stats div {
+.info {
   margin: 4px;
-  background-color: #ccc;
-  padding: 10px;
+  background-color: #ddd;
+  padding: 5px 10px;
   font-size: 20px;
   border-radius: 30px;
 }
@@ -125,7 +136,7 @@ h2 {
 .remove {
   margin: 4px;
   background-color: #ccc;
-  padding: 10px;
+  padding: 5px 10px;
   font-size: 20px;
   border-radius: 30px;
   background-color: darkred;
