@@ -1,8 +1,8 @@
-import ClientBookkeeping from "../../src/components/ClientBookkeeping.vue"
+import ClientTodoBookkeeping from "../../src/components/ClientTodoBookkeeping.vue"
 
-describe('ClientBookkeeping.cy.js', () => {
+describe('ClientTodoBookkeeping.cy.js', () => {
   it('mounts, laddar in en fake månad, klickar på knappen och CSS ändras', () => {
-    cy.mount(ClientBookkeeping, {
+    cy.mount(ClientTodoBookkeeping, {
       props: {
           clients: [
             {
@@ -24,7 +24,7 @@ describe('ClientBookkeeping.cy.js', () => {
           ]
       }
     })
-    cy.get("Button").should("contain", "Färdig")
+    cy.get("Button").should("contain", "Klar")
     cy.get("Button").click()
     cy.get("Button").should("contain", "Ångra")
     cy.get('[data-cy="test-div"').should('have.css', 'background-color', 'rgb(128, 128, 128)')

@@ -1,6 +1,6 @@
-import ClientVAT from "../../src/components/ClientVAT.vue"
+import ClientVAT from "../../src/components/ClientTodoVAT.vue"
 
-describe('ClientVAT.cy.js', () => {
+describe('ClientTodoVAT.cy.js', () => {
   it('mounts, laddar in en fake månad, klickar på knappen och CSS ändras', () => {
     cy.mount(ClientVAT, {
       props: {
@@ -24,7 +24,7 @@ describe('ClientVAT.cy.js', () => {
           ]
       }
     })
-    cy.get("Button").should("contain", "Färdig")
+    cy.get("Button").should("contain", "Klar")
     cy.get("Button").click()
     cy.get("Button").should("contain", "Ångra")
     cy.get('[data-cy="test-div"').should('have.css', 'background-color', 'rgb(128, 128, 128)')

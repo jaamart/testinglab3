@@ -141,6 +141,10 @@ h3 {
   justify-content: center;
   flex-wrap: wrap;
 }
+.straightline {
+  text-align: end;
+  padding-right: 25%;
+}
 .todo {
   width: 100%;
   height: 70vh;

@@ -6,6 +6,7 @@
         data-cy="test-div"
         v-for="client in clientsOrderedByMonths"
         :class="{ booksdone: client.isbookkeepingdone }"
+        class="straightline"
         :key="client.monthid"
       >
         {{ client.year }}
@@ -20,6 +21,7 @@
       <div
         v-for="(client, index) in clientsWithQuarterlyBooks"
         :class="{ booksdone: client.isbookkeepingdone }"
+        class="straightline"
         :key="client.monthid"
       >
         {{ client.year }}

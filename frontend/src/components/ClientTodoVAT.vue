@@ -6,6 +6,7 @@
       <div
         data-cy="test-div"
         v-for="client in clients.clients"
+        class="straightline"
         :class="{ vatdone: client.isvatdone }"
         :key="client.monthid"
       >
@@ -20,6 +21,7 @@
     <div v-else-if="activeClient.vatfrequency === 3">
       <div
         v-for="(client, index) in clientsWithQuarterlyVAT"
+        class="straightline"
         :class="{ vatdone: client.isvatdone }"
         :key="client.monthid"
       >

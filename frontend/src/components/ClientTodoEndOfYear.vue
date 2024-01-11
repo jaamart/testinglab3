@@ -62,7 +62,7 @@
           </button>
         </li>
         <li>
-          Deklaration
+          INK1
           <button class="donebtn">
             {{ !activeClient.istaxfiled ? "Klar" : "Ångra" }}
           </button>
@@ -117,6 +117,8 @@ function markEoyStep() {
 }
 li {
   list-style: none;
+  text-align: end;
+  padding-right: 25%;
 }
 ul {
   padding: 0;
