@@ -1,7 +1,7 @@
 <template>
   <div class="bookkeeping">
     <h3>Bokföring</h3>
-    <div v-if="clients.clients[0].booksfrequency === 1">
+    <div v-if="activeClient.booksfrequency === 1">
       <div
         data-cy="test-div"
         v-for="client in clientsOrderedByMonths"
@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div v-else-if="clients.clients[0].booksfrequency === 3">
+    <div v-else-if="activeClient.booksfrequency === 3">
       <div
         v-for="(client, index) in clientsWithQuarterlyBooks"
         :class="{ booksdone: client.isbookkeepingdone }"
@@ -33,24 +33,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import axios from "axios";
 
 const clients = defineProps(["clients"]);
 const clientsQuarterly = ref(clients);
+const activeClient = ref(clients.clients[0]);
+
+watch(
+  () => clientsQuarterly.value.clients[0],
+  (newVal) => {
+    activeClient.value = newVal;
+  }
+);
 
 interface Client {
-  clientname: string;
   clientid: number;
-  shortname: string;
-  endofyear: string;
-  corporateform: string;
   booksfrequency: number;
-  bank: string;
-  name: string;
-  monthname: string;
   monthid: number;
-  year: string;
   isbookkeepingdone: boolean;
 }
 
@@ -62,9 +62,6 @@ function markBookkeeping(client: Client) {
       monthId: client.monthid,
       done: client.isbookkeepingdone,
       booksfreq: client.booksfrequency,
-    })
-    .then((res) => {
-      console.log(res);
     })
     .catch((error) => {
       console.error(error);

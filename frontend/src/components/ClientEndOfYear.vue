@@ -1,60 +1,78 @@
 <template>
   <div class="endofyear">
     <h3>Bokslut</h3>
-    <div v-if="clients.clients[0].corporateform === 'AB'">
+    <div v-if="activeClient.corporateform === 'AB'">
       <ul>
-        <li :class="{ done: clients.clients[0].isstartdone }">
+        <li :class="{ done: activeClient.isstartdone }">
           Påbörjat
-          <button>
-            {{ !clients.clients[0].isstartdone ? "Färdig" : "Ångra" }}
+          <button @click="markEoyStep()">
+            {{ !activeClient.isstartdone ? "Färdig" : "Ångra" }}
           </button>
         </li>
-        <li :class="{ done: clients.clients[0].isbooksdone }">
+        <li :class="{ done: activeClient.isbooksdone }">
           Bokslut
           <button>
-            {{ !clients.clients[0].isbooksdone ? "Färdig" : "Ångra" }}
+            {{ !activeClient.isbooksdone ? "Färdig" : "Ångra" }}
           </button>
         </li>
-        <li :class="{ done: clients.clients[0].isreportdone }">
+        <li :class="{ done: activeClient.isreportdone }">
           Årsredovisning
           <button>
-            {{ !clients.clients[0].isreportdone ? "Färdig" : "Ångra" }}
+            {{ !activeClient.isreportdone ? "Färdig" : "Ångra" }}
           </button>
         </li>
-        <li :class="{ done: clients.clients[0].istaxdone }">
+        <li :class="{ done: activeClient.istaxdone }">
           INK2
           <button>
-            {{ !clients.clients[0].istaxdone ? "Färdig" : "Ångra" }}
+            {{ !activeClient.istaxdone ? "Färdig" : "Ångra" }}
           </button>
         </li>
-        <li>Revision</li>
-        <li :class="{ done: clients.clients[0].isreportfiled }">
+        <li v-if="activeClient.hasauditor">
+          Revision
+          <button>
+            {{ !activeClient.istaxdone ? "Färdig" : "Ångra" }}
+          </button>
+        </li>
+        <li :class="{ done: activeClient.isreportfiled }">
           Inl. INK2
           <button>
-            {{ !clients.clients[0].isreportfiled ? "Färdig" : "Ångra" }}
+            {{ !activeClient.isreportfiled ? "Färdig" : "Ångra" }}
           </button>
         </li>
-        <li :class="{ done: clients.clients[0].istaxfiled }">
+        <li :class="{ done: activeClient.istaxfiled }">
           Inl. ÅRS
           <button>
-            {{ !clients.clients[0].istaxfiled ? "Färdig" : "Ångra" }}
+            {{ !activeClient.istaxfiled ? "Färdig" : "Ångra" }}
           </button>
         </li>
       </ul>
     </div>
-    <div v-else-if="clients.clients[0].corporateform === 'EF'">
+    <div v-else-if="activeClient.corporateform === 'EF'">
       <ul>
         <li>Påbörjat</li>
         <li>Bokslut</li>
         <li>Deklaration</li>
-        <li v-if="clients.clients[0].vatfrequency === 12">Moms</li>
+        <li v-if="activeClient.vatfrequency === 12">Moms</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from "vue";
 const clients = defineProps(["clients"]);
+const activeClient = ref(clients.clients[0]);
+
+watch(
+  () => clients.clients[0],
+  (newVal) => {
+    activeClient.value = newVal;
+  }
+);
+
+function markEoyStep() {
+  console.log(activeClient.value);
+}
 </script>
 
 <style scoped>

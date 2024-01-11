@@ -2,7 +2,7 @@
   <div class="vat">
     <h3>Moms</h3>
 
-    <div v-if="clients.clients[0].vatfrequency === 1">
+    <div v-if="activeClient.vatfrequency === 1">
       <div
         data-cy="test-div"
         v-for="client in clients.clients"
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div v-else-if="clients.clients[0].vatfrequency === 3">
+    <div v-else-if="activeClient.vatfrequency === 3">
       <div
         v-for="(client, index) in clientsWithQuarterlyVAT"
         :class="{ vatdone: client.isvatdone }"
@@ -30,30 +30,29 @@
         </button>
       </div>
     </div>
-    <div v-if="clients.clients[0].vatfrequency === 12"></div>
+    <div v-if="clients.clients[0].vatfrequency === 12">Görs i bokslutet</div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed, watch } from "vue";
 import axios from "axios";
-import { computed, ref } from "vue";
 
 const clients = defineProps(["clients"]);
 const clientsQuarterly = ref(clients);
+const activeClient = ref(clients.clients[0]);
+
+watch(
+  () => clientsQuarterly.value.clients[0],
+  (newVal) => {
+    activeClient.value = newVal;
+  }
+);
 
 interface Client {
-  clientname: string;
   clientid: number;
-  shortname: string;
-  endofyear: string;
-  corporateform: string;
-  booksfrequency: number;
-  bank: string;
-  name: string;
-  monthname: string;
+  vatfrequency: number;
   monthid: number;
-  year: string;
-  isbookkeepingdone: boolean;
   isvatdone: boolean;
 }
 
@@ -64,10 +63,7 @@ function markVAT(client: Client) {
       id: client.clientid,
       monthId: client.monthid,
       done: client.isvatdone,
-      vatfreq: client.booksfrequency,
-    })
-    .then((res) => {
-      console.log(res);
+      vatfreq: client.vatfrequency,
     })
     .catch((error) => {
       console.error(error);
