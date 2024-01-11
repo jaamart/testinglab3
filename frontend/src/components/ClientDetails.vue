@@ -37,7 +37,9 @@
           }}
         </strong>
       </div>
-      <button class="remove" @click="removeClient">Ta bort kund</button>
+      <button data-cy="delete" class="remove" @click="removeClient">
+        Ta bort kund
+      </button>
     </div>
 
     <div class="placeholder-todo">

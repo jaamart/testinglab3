@@ -1,7 +1,7 @@
 <template>
   <h2>Kunder</h2>
-  <ul>
-    <li v-for="client in clients" :key="client.clientid">
+  <ul data-cy="clientlist">
+    <li data v-for="client in clients" :key="client.clientid">
       <router-link :to="`/client/${client.clientid}`">
         {{ client.shortname }}
       </router-link>

@@ -18,3 +18,8 @@ Scenario: Välj en kund från listan
   Given Sidan har laddat in en lista med kunder och visar den till vänster
   When Jag klickar på den sista i listan
   Then Sidan visar information om rätt kund
+
+Scenario: Ta bort kund från listan
+  Given Testet har lagt till kunden TEST
+  When Användaren tar bort kunden
+  Then Test-användaren raderas och man skickas till förstasidan

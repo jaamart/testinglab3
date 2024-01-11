@@ -43,15 +43,29 @@ Given('Sidan har laddat in en lista med kunder och visar den till vänster', () 
 })
 
 When('Jag klickar på den sista i listan', () => {
-  cy.get('ul > li:last > a').click()
+  cy.get('ul[data-cy="clientlist"] > li:last > a').click()
 })
 
 Then('Sidan visar information om rätt kund', ()=> {
-  cy.get('ul > li:last > a').contains('TEST')
+  cy.get('ul[data-cy="clientlist"] > li:last ').contains('TEST')
   cy.get('[data-cy="shortname"').contains('TEST')
   cy.get('[data-cy="corporateform"').contains('AB')
   cy.get('[data-cy="endofyear"').contains('8')
   cy.get('[data-cy="bank"').contains('Falkenbergs Sparbank')
   cy.get('[data-cy="booksfrequency"').contains('månad')
   cy.get('[data-cy="vatfrequency"').contains('år')
+})
+
+Given ('Testet har lagt till kunden TEST', () => {
+  cy.visit('http://localhost:5173/')
+  cy.get('ul[data-cy="clientlist"] > li:last > a').click()
+  cy.get('[data-cy="shortname"').contains('TEST')
+})
+
+When ('Användaren tar bort kunden', () => {
+  cy.get('[data-cy="delete"').click()
+})
+
+Then ('Test-användaren raderas och man skickas till förstasidan', () => {
+  cy.get('ul > li:last').contains('TEST').should('not.exist')
 })

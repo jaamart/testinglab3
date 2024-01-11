@@ -71,8 +71,9 @@ app.get('/api/clients', (req, res) => __awaiter(void 0, void 0, void 0, function
     res.send(rows);
 }));
 app.get('/api/client/:clientid', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { rows } = yield client.query(`SELECT clients.*, months.*, bookkeeping.*, vat.*
+    const { rows } = yield client.query(`SELECT clients.*, months.*, bookkeeping.*, vat.*, eoy.*
     FROM clients
+    LEFT JOIN eoy ON clients.clientid = eoy.clientId
     LEFT JOIN bookkeeping ON clients.clientid = bookkeeping.clientId
     LEFT JOIN vat ON clients.clientid = vat.clientId AND bookkeeping.MonthID = vat.MonthID
     LEFT JOIN months ON bookkeeping.monthId = months.monthId
