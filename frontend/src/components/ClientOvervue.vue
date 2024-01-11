@@ -42,21 +42,21 @@
       </button>
     </div>
 
-    <div class="placeholder-todo">
-      <ClientBookkeeping :clients="clients" />
-      <ClientVAT :clients="clients" />
-      <ClientEndOfYear :clients="clients" />
+    <div class="todo">
+      <ClientTodoBookkeeping :clients="clients" />
+      <ClientTodoVAT :clients="clients" />
+      <ClientTodoEndOfYear :clients="clients" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, Ref, computed, watch } from "vue";
-import ClientBookkeeping from "./ClientBookkeeping.vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-import ClientVAT from "./ClientVAT.vue";
-import ClientEndOfYear from "./ClientEndOfYear.vue";
+import ClientTodoBookkeeping from "./ClientTodoBookkeeping.vue";
+import ClientTodoVAT from "./ClientTodoVAT.vue";
+import ClientTodoEndOfYear from "./ClientTodoEndOfYear.vue";
 const clients: Ref<Client[]> = ref([]);
 
 interface Client {
@@ -108,25 +108,18 @@ function removeClient() {
 }
 </script>
 
-<style scoped>
+<style>
+.donebtn {
+  background-color: #eee;
+  padding: 2px 10px;
+  margin-bottom: 4px;
+}
 h2 {
   font-size: 32px;
 }
-.placeholder-todo {
-  width: 100%;
-  height: 70vh;
-  background-color: #ddd;
-  display: flex;
-  justify-content: space-around;
-  border-radius: 10px;
+h3 {
+  font-size: 26px;
 }
-
-.stats {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 .info {
   margin: 4px;
   background-color: #ddd;
@@ -134,7 +127,6 @@ h2 {
   font-size: 20px;
   border-radius: 30px;
 }
-
 .remove {
   margin: 4px;
   background-color: #ccc;
@@ -143,5 +135,18 @@ h2 {
   border-radius: 30px;
   background-color: darkred;
   color: #ccc;
+}
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.todo {
+  width: 100%;
+  height: 70vh;
+  background-color: #ddd;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 10px;
 }
 </style>

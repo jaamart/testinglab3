@@ -5,54 +5,74 @@
       <ul>
         <li :class="{ done: activeClient.isstartdone }">
           Påbörjat
-          <button @click="markEoyStep()">
-            {{ !activeClient.isstartdone ? "Färdig" : "Ångra" }}
+          <button @click="markEoyStep()" class="donebtn">
+            {{ !activeClient.isstartdone ? "Klar" : "Ångra" }}
           </button>
         </li>
         <li :class="{ done: activeClient.isbooksdone }">
           Bokslut
-          <button>
-            {{ !activeClient.isbooksdone ? "Färdig" : "Ångra" }}
+          <button class="donebtn">
+            {{ !activeClient.isbooksdone ? "Klar" : "Ångra" }}
           </button>
         </li>
         <li :class="{ done: activeClient.isreportdone }">
           Årsredovisning
-          <button>
-            {{ !activeClient.isreportdone ? "Färdig" : "Ångra" }}
+          <button class="donebtn">
+            {{ !activeClient.isreportdone ? "Klar" : "Ångra" }}
           </button>
         </li>
         <li :class="{ done: activeClient.istaxdone }">
           INK2
-          <button>
-            {{ !activeClient.istaxdone ? "Färdig" : "Ångra" }}
+          <button class="donebtn">
+            {{ !activeClient.istaxdone ? "Klar" : "Ångra" }}
           </button>
         </li>
         <li v-if="activeClient.hasauditor">
           Revision
-          <button>
-            {{ !activeClient.istaxdone ? "Färdig" : "Ångra" }}
+          <button class="donebtn">
+            {{ !activeClient.istaxdone ? "Klar" : "Ångra" }}
           </button>
         </li>
         <li :class="{ done: activeClient.isreportfiled }">
           Inl. INK2
-          <button>
-            {{ !activeClient.isreportfiled ? "Färdig" : "Ångra" }}
+          <button class="donebtn">
+            {{ !activeClient.isreportfiled ? "Klar" : "Ångra" }}
           </button>
         </li>
         <li :class="{ done: activeClient.istaxfiled }">
           Inl. ÅRS
-          <button>
-            {{ !activeClient.istaxfiled ? "Färdig" : "Ångra" }}
+          <button class="donebtn">
+            {{ !activeClient.istaxfiled ? "Klar" : "Ångra" }}
           </button>
         </li>
       </ul>
     </div>
     <div v-else-if="activeClient.corporateform === 'EF'">
       <ul>
-        <li>Påbörjat</li>
-        <li>Bokslut</li>
-        <li>Deklaration</li>
-        <li v-if="activeClient.vatfrequency === 12">Moms</li>
+        <li>
+          Påbörjat
+          <button class="donebtn">
+            {{ !activeClient.istaxfiled ? "Klar" : "Ångra" }}
+          </button>
+        </li>
+        <li>
+          Bokslut
+          <button class="donebtn">
+            {{ !activeClient.istaxfiled ? "Klar" : "Ångra" }}
+          </button>
+        </li>
+        <li>
+          Deklaration
+          <button class="donebtn">
+            {{ !activeClient.istaxfiled ? "Klar" : "Ångra" }}
+          </button>
+        </li>
+        <li v-if="activeClient.vatfrequency === 12">
+          Moms
+          <button class="donebtn">
+            {{ !activeClient.istaxfiled ? "Klar" : "Ångra" }}
+          </button>
+        </li>
       </ul>
     </div>
   </div>
@@ -86,7 +106,7 @@ function markEoyStep() {
     background-color: rgb(128, 128, 128);
   }
 }
-.done {
+.vatdone {
   text-decoration: line-through;
   background-color: rgb(128, 128, 128);
   animation: done 2s;

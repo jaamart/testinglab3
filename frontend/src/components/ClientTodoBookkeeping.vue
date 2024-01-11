@@ -10,8 +10,8 @@
       >
         {{ client.year }}
         {{ client.monthname }}
-        <button @click="markBookkeeping(client)">
-          {{ !client.isbookkeepingdone ? "Färdig" : "Ångra" }}
+        <button @click="markBookkeeping(client)" class="donebtn">
+          {{ !client.isbookkeepingdone ? "Klar" : "Ångra" }}
         </button>
       </div>
     </div>
@@ -24,8 +24,8 @@
       >
         {{ client.year }}
         Kvartal {{ index + 1 }}
-        <button @click="markBookkeeping(client)">
-          {{ !client.isbookkeepingdone ? "Färdig" : "Ångra" }}
+        <button @click="markBookkeeping(client)" class="donebtn">
+          {{ !client.isbookkeepingdone ? "Klar" : "Ångra" }}
         </button>
       </div>
     </div>
@@ -82,9 +82,6 @@ const clientsWithQuarterlyBooks = computed(() => {
 </script>
 
 <style scoped>
-button {
-  padding: 2px 10px;
-}
 .bookkeeping {
   width: 30%;
   background-color: #619b8a;
@@ -104,8 +101,5 @@ button {
   text-decoration: line-through;
   background-color: rgb(128, 128, 128);
   animation: done 2s;
-}
-h3 {
-  font-size: 26px;
 }
 </style>

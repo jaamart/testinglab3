@@ -4,11 +4,11 @@ import './style.css'
 import App from './App.vue'
 
 import AddClient from "./components/AddClient.vue";
-import ClientDetailsVue from './components/ClientDetails.vue';
+import ClientOvervue from './components/ClientOvervue.vue';
 
 const routes = [
   { path: '/', name:'addClient', component: AddClient },
-  { path: '/client/:id', name:'client', component: ClientDetailsVue }
+  { path: '/client/:id', name:'client', component: ClientOvervue }
 ]
 
 const router = createRouter({

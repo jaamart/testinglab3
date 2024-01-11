@@ -11,8 +11,8 @@
       >
         {{ client.year }}
         {{ client.monthname }}
-        <button @click="markVAT(client)">
-          {{ !client.isvatdone ? "Färdig" : "Ångra" }}
+        <button @click="markVAT(client)" class="donebtn">
+          {{ !client.isvatdone ? "Klar" : "Ångra" }}
         </button>
       </div>
     </div>
@@ -25,12 +25,14 @@
       >
         {{ client.year }}
         Kvartal {{ index + 1 }}
-        <button @click="markVAT(client)">
-          {{ !client.isvatdone ? "Färdig" : "Ångra" }}
+        <button @click="markVAT(client)" class="donebtn">
+          {{ !client.isvatdone ? "Klar" : "Ångra" }}
         </button>
       </div>
     </div>
-    <div v-if="clients.clients[0].vatfrequency === 12">Görs i bokslutet</div>
+    <div v-if="clients.clients[0].vatfrequency === 12">
+      Görs i bokslutet &#x2192;
+    </div>
   </div>
 </template>
 
@@ -77,11 +79,7 @@ const clientsWithQuarterlyVAT = computed(() => {
 });
 </script>
 
-<style scope>
-button {
-  padding: 2px 10px;
-  margin-bottom: 10px;
-}
+<style scoped>
 .vat {
   width: 30%;
   background-color: #f4b942;
@@ -101,8 +99,5 @@ button {
   text-decoration: line-through;
   background-color: rgb(128, 128, 128);
   animation: done 2s;
-}
-h3 {
-  font-size: 26px;
 }
 </style>
